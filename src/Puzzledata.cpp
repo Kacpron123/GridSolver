@@ -17,8 +17,7 @@ Puzzledata::Puzzledata(int number){
       throw std::runtime_error("Unable to open file: " + name);
    json datafile = json::parse(file);
    width=datafile["width"];
-   height=datafile["height"];
-
+      height=datafile["height"];
    for(auto string: datafile["originalColors"])
       colors.push_back(string);   
    for(auto topheader:datafile["topHeader"]){
@@ -58,23 +57,36 @@ void Puzzledata::SimpleBoxes(dimension dim,int line){
    int lenght=(dim==col) ? height : width;
    vector<int> temp(lenght,0);
    vector<vector<int>> header = (dim==col) ? topHeader[line] : leftHeader[line];
-   
+   if(header.empty()){
+      if(dim==col)
+         for(int i=0;i<height;i++)
+            solution[i][line]=-1;
+      else
+         solution[line]=vector<int> (width,0);
+      return ;
+   }
    int start=0,PreviousColor=-2;
+   int last,mx=0;
    for(auto &vec: header){
-      fill(temp.begin()+start,temp.begin()+start+vec[lenght],vec[color]);
-      start+=(PreviousColor==vec[color])+vec[lenght]-1;
+      fill(temp.begin()+start,temp.begin()+start+vec[range],vec[color]);
+      last=start+vec[range];
+      mx=max(mx,vec[range]);
+      start+=(PreviousColor==vec[color])+vec[range]+1;
       PreviousColor=vec[color];
    }
+   if(mx<=lenght-last)
+      return;
    int i=0;
-   for(int &color : temp){
-      if(dim==col) solution[i][line]=color;
-      else solution[line][i]=color;
+   for(int &c : temp){
+      if(dim==col) solution[i][line]=c;
+      else solution[line][i]=c;
       i++;
    }
 }
 void Puzzledata::Solve(){
-   for(int i=0;i<height;i++)
-      SimpleBoxes(row,i);
-   for(int i=0;i<width;i++)
-      SimpleBoxes(col,i);
+   // for(int i=0;i<height;i++)
+   //    SimpleBoxes(row,i);
+   // for(int i=0;i<width;i++)
+   //    SimpleBoxes(col,i);
+   SimpleBoxes(row,8);
 }

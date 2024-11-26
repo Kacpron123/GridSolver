@@ -7,7 +7,7 @@
 
 
 enum dimension{row,col};
-enum typ{color,lenght};
+enum typ{color,range};
 
 class Puzzledata{
       bool spaces=false;

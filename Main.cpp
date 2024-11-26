@@ -8,11 +8,6 @@ https://en.wikipedia.org/wiki/Nonogram#Simple_spaces
 #include <iostream>
 #include <string>
 
-struct nextsolve{
-    int x;
-    int y;
-    dimension dim;
-};
 int main(int argc, char* argv[]){
     if(argc!=2)
         throw std::logic_error("not added id of puzzle");

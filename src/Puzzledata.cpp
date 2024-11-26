@@ -9,9 +9,11 @@ using std::string;
 
 Puzzledata::Puzzledata(int number){
    using json = nlohmann::json;
-   string name="./puzzle_"+to_string(number)+".json";
-   json datafile = json::parse(std::ifstream(name));
-   
+   string name="puzzles/puzzle_"+to_string(number)+".json";
+   std::ifstream _file(name);
+   if(!file.is_open())
+      throw std::runtime_error("Unable to open file: " + name);
+   json datafile = json::parse(name);
    width=datafile["width"];
    height=datafile["height"];
 
@@ -60,6 +62,7 @@ void Puzzledata::SimpleBoxes(dimension dim,int line){
     int i=0;
     string PreviusColor=-2;
     for(auto vec: header){
-        
+        fill(temp.begin()+i,temp.begin()+i+vec[lenght]);
+         
     }
 }

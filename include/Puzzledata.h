@@ -28,7 +28,8 @@ class Puzzledata{
       /// @param number id of puzzle
       Puzzledata(int number);
       /// @brief print solution
-      void Print();
+      /// @param spaces make spaces every 5 cell
+      void Print(bool spaces=false);
       /// @brief solve puzzle
       void Solve();
       /// @brief simpleboxes technique
